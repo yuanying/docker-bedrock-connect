@@ -1,0 +1,20 @@
+[
+	{
+		"name": "S1",
+		"iconUrl": "https://i.imgur.com/3BmFZRE.png",
+		"address": "minecraft.oeilvert.org",
+		"port": 19133
+	},
+	{
+		"name": "S2",
+		"iconUrl": "https://i.imgur.com/3BmFZRE.png",
+		"address": "minecraft2.oeilvert.org",
+		"port": 19133
+	},
+	{
+		"name": "S3",
+		"iconUrl": "https://i.imgur.com/3BmFZRE.png",
+		"address": "minecraft3.oeilvert.org",
+		"port": 19133
+	}
+]
