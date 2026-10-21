@@ -1,0 +1,27 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "A version is proposed only once it has been public for seven days, so that a release pulled or fixed in its first week never reaches a branch. internalChecksFilter is already strict by default; it is stated so that the wait is read here as holding back the branch and the pull request themselves, not only a status check on them",
+  "extends": ["config:recommended", ":semanticCommitTypeAll(chore)"],
+  "timezone": "Asia/Tokyo",
+  "dependencyDashboard": true,
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "platformAutomerge": false,
+  "packageRules": [
+    {
+      "description": "The base image is pulled by a tag that keeps moving (eclipse-temurin:11-jre is rebuilt for every Java 11 patch), so a checkout does not say which image a build used. Pinning the digest states it in the Dockerfile and lets Renovate follow each rebuild of the tag, which the weekly release then publishes",
+      "matchManagers": ["dockerfile"],
+      "pinDigests": true
+    },
+    {
+      "description": "Workflows are already read by the github-actions manager. Grouping them keeps a handful of actions from arriving as a handful of pull requests, since they are updated together and reviewed the same way",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    },
+    {
+      "description": "Patches and digest moves, the first pin among them, are merged without a review once the image builds on the pull request; Renovate merges them itself (platformAutomerge is off), so the repository's own settings are left as they are. A minor or major update can change behaviour and waits for a person",
+      "matchUpdateTypes": ["patch", "digest", "pin", "pinDigest"],
+      "automerge": true
+    }
+  ]
+}
