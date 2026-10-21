@@ -9,7 +9,7 @@
   "platformAutomerge": false,
   "packageRules": [
     {
-      "description": "The base image is pulled by a tag that keeps moving (openjdk:11 has no newer tag to move to), so a checkout does not say which image a build used. Pinning the digest states it in the Dockerfile and lets Renovate follow each rebuild of the tag, which the weekly release then publishes",
+      "description": "The base image is pulled by a tag that keeps moving (eclipse-temurin:11-jre is rebuilt for every Java 11 patch), so a checkout does not say which image a build used. Pinning the digest states it in the Dockerfile and lets Renovate follow each rebuild of the tag, which the weekly release then publishes",
       "matchManagers": ["dockerfile"],
       "pinDigests": true
     },
