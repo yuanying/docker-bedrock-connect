@@ -1,10 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "A version is proposed only once it has been public for seven days, so that a release pulled or fixed in its first week never reaches a branch. internalChecksFilter is already strict by default; it is stated so that the wait is read here as holding back the branch and the pull request themselves, not only a status check on them",
+  "description": "A version is proposed only once it has been public for two days, so that a release pulled or fixed in its first days never reaches a branch. internalChecksFilter is already strict by default; it is stated so that the wait is read here as holding back the branch and the pull request themselves, not only a status check on them",
   "extends": ["config:recommended", ":semanticCommitTypeAll(chore)"],
   "timezone": "Asia/Tokyo",
   "dependencyDashboard": true,
-  "minimumReleaseAge": "7 days",
+  "minimumReleaseAge": "2 days",
   "internalChecksFilter": "strict",
   "platformAutomerge": false,
   "packageRules": [
@@ -12,6 +12,19 @@
       "description": "The base image is pulled by a tag that keeps moving (eclipse-temurin:11-jre is rebuilt for every Java 11 patch), so a checkout does not say which image a build used. Pinning the digest states it in the Dockerfile and lets Renovate follow each rebuild of the tag, which the weekly release then publishes",
       "matchManagers": ["dockerfile"],
       "pinDigests": true
+    },
+    {
+      "description": "The official ubuntu image is proposed without the two-day wait. Docker Hub gives a tag's last push as its release time, and the official ubuntu tags are pushed again every day or two, so a tag would rarely look two days old and its updates would hardly ever be proposed. The Dockerfile here starts from eclipse-temurin, not ubuntu, today; the rule is kept so that a base changed to ubuntu later does not fall into the same trap. Docker Hub names are matched as written, so each way of writing the image is listed. The pull request's build still has to pass",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ubuntu",
+        "library/ubuntu",
+        "docker.io/ubuntu",
+        "docker.io/library/ubuntu",
+        "index.docker.io/ubuntu",
+        "index.docker.io/library/ubuntu"
+      ],
+      "minimumReleaseAge": null
     },
     {
       "description": "Workflows are already read by the github-actions manager. Grouping them keeps a handful of actions from arriving as a handful of pull requests, since they are updated together and reviewed the same way",
