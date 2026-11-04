@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "The patch, digest and pinning updates Renovate merges wait for the image to build on the pull request",
-  "extends": ["github>yuanying/renovate-config", "github>yuanying/renovate-config:automerge-patch"],
+  "description": "Every update gets GitHub's auto-merge through platform-automerge and is merged once a code owner in .github/CODEOWNERS approves it. The image is built only on pull requests that touch it, so no check is required by the ruleset; an update to the image is approved once its build on the pull request has passed",
+  "extends": ["github>yuanying/renovate-config", "github>yuanying/renovate-config:platform-automerge"],
   "packageRules": [
     {
       "description": "The base image is pulled by a tag that keeps moving (eclipse-temurin:11-jre is rebuilt for every Java 11 patch), so a checkout does not say which image a build used. Pinning the digest states it in the Dockerfile and lets Renovate follow each rebuild of the tag, which the weekly release then publishes",
